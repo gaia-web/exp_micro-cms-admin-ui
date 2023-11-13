@@ -25,13 +25,16 @@
         </ion-item>
         <ion-button expand="block" @click="signInHandler">Sign In</ion-button>
       </ion-card>
-      <ion-text v-else slot="fixed" class="center">You are signed in.</ion-text>
+      <div v-else slot="fixed" class="center">
+        <ion-text>You are now signed in.</ion-text>
+        <ion-button expand="block" @click="signOutHandler">Sign Out</ion-button>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { checkAuthentication, signIn } from "@/utils/api";
+import { checkAuthentication, signIn, signOut } from "@/utils/api";
 import {
   IonButton,
   IonCard,
@@ -67,6 +70,14 @@ const signInHandler = async () => {
       });
       await alert.present();
     }
+  }
+};
+
+const signOutHandler = async () => {
+  try {
+    await signOut();
+  } finally {
+    authenticated.value = await checkAuthentication();
   }
 };
 </script>

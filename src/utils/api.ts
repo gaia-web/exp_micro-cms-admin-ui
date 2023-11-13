@@ -32,6 +32,13 @@ export async function signIn(passcode: string) {
   });
 }
 
+export async function signOut() {
+  await fetch(`${API_ENDPOINT}/auth/sign-out`, {
+    method: "POST",
+    credentials: "include",
+  });
+}
+
 export async function obtainGeneralInfoList() {
   return await fetch(`${API_ENDPOINT}/general`).then((response) =>
     response.json()

@@ -1,0 +1,7 @@
+{
+  "name": "admin-ui",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}

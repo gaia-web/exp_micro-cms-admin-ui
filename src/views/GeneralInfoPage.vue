@@ -4,7 +4,7 @@
       <ion-toolbar>
         <ion-title size="large">General Info</ion-title>
         <ion-buttons slot="end" :collapse="true">
-          <ion-button href="/tabs/general/$">
+          <ion-button href="/tabs/general/$" title="Add">
             <ion-icon slot="icon-only" :icon="add"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -15,7 +15,7 @@
         <ion-toolbar>
           <ion-title size="large">General Info</ion-title>
           <ion-buttons slot="end" :collapse="true">
-            <ion-button href="/tabs/general/$">
+            <ion-button href="/tabs/general/$" title="Add">
               <ion-icon slot="icon-only" :icon="add"></ion-icon>
             </ion-button>
           </ion-buttons>

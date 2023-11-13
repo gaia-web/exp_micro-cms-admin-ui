@@ -7,10 +7,10 @@
         </ion-buttons>
         <ion-title size="large">{{ key ?? "General Info" }}</ion-title>
         <ion-buttons slot="end" :collapse="true">
-          <ion-button @click="updateHandler">
+          <ion-button @click="updateHandler" title="Save">
             <ion-icon slot="icon-only" :icon="save"></ion-icon>
           </ion-button>
-          <ion-button @click="deleteHandler">
+          <ion-button @click="deleteHandler" title="Delete">
             <ion-icon slot="icon-only" :icon="trash"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -24,10 +24,10 @@
           </ion-buttons>
           <ion-title size="large">{{ key ?? "General Info" }}</ion-title>
           <ion-buttons slot="end" :collapse="true">
-            <ion-button @click="updateHandler">
+            <ion-button @click="updateHandler" title="Save">
               <ion-icon slot="icon-only" :icon="save"></ion-icon>
             </ion-button>
-            <ion-button @click="deleteHandler">
+            <ion-button @click="deleteHandler" title="Delete">
               <ion-icon slot="icon-only" :icon="trash"></ion-icon>
             </ion-button>
           </ion-buttons>

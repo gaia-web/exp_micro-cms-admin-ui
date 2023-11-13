@@ -20,6 +20,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/GeneralInfoPage.vue')
       },
       {
+        path: 'general/:id',
+        component: () => import('@/views/GeneralInfoDetailPage.vue')
+      },
+      {
         path: 'documents',
         component: () => import('@/views/DocumentsPage.vue')
       },

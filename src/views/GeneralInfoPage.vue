@@ -4,7 +4,7 @@
       <ion-toolbar>
         <ion-title size="large">General Info</ion-title>
         <ion-buttons slot="end" :collapse="true">
-          <ion-button @click="addItemHandler">
+          <ion-button href="/tabs/general/$">
             <ion-icon slot="icon-only" :icon="add"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -15,7 +15,7 @@
         <ion-toolbar>
           <ion-title size="large">General Info</ion-title>
           <ion-buttons slot="end" :collapse="true">
-            <ion-button @click="addItemHandler">
+            <ion-button href="/tabs/general/$">
               <ion-icon slot="icon-only" :icon="add"></ion-icon>
             </ion-button>
           </ion-buttons>
@@ -26,7 +26,7 @@
         <ion-item
           v-for="itemKey in itemKeys"
           button
-          @click="showItemDetailHandler(itemKey)"
+          :href="`/tabs/general/${encodeURIComponent(itemKey)}`"
         >
           {{ itemKey }}
         </ion-item>
@@ -72,70 +72,4 @@ const refreshList = async () => {
 onBeforeMount(async () => {
   await refreshList();
 });
-
-const addItemHandler = async () => {
-  const alert = await alertController.create({
-    header: "Adding an entry",
-    inputs: [
-      {
-        name: "key",
-        placeholder: "Key",
-      },
-      {
-        name: "value",
-        placeholder: "Value",
-      },
-    ],
-    buttons: [
-      {
-        text: "Cancel",
-        role: "cancel",
-      },
-      {
-        text: "OK",
-        role: "confirm",
-        handler: async ({ key, value }) => {
-          await addGeneralInfo(key, value);
-          await refreshList();
-        },
-      },
-    ],
-  });
-  await alert.present();
-  await refreshList();
-};
-
-const showItemDetailHandler = async (key: string) => {
-  const alert = await alertController.create({
-    header: "Adding an entry",
-    inputs: [
-      {
-        name: "value",
-        value: JSON.stringify(await obtainGeneralInfo(key)),
-      },
-    ],
-    buttons: [
-      {
-        text: "Delete",
-        handler: async () => {
-          await deleteGeneralInfo(key);
-          await refreshList();
-        },
-      },
-      {
-        text: "Update",
-        handler: async ({ value }) => {
-          await updateGeneralInfo(key, value);
-          await refreshList();
-        },
-      },
-      {
-        text: "OK",
-        role: "cancel",
-      },
-    ],
-  });
-  await alert.present();
-  await refreshList();
-};
 </script>

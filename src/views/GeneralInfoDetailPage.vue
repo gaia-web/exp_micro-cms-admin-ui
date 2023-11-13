@@ -38,6 +38,7 @@
         <ion-item>
           <ion-input
             label="Key"
+            label-placement="stacked"
             :disabled="id !== '$'"
             v-model="key"
           ></ion-input>

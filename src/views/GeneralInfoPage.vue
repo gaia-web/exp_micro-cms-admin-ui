@@ -47,16 +47,11 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
-  alertController,
 } from "@ionic/vue";
 import { useRouter } from "vue-router";
 import {
-  addGeneralInfo,
-  deleteGeneralInfo,
-  obtainGeneralInfo,
   obtainGeneralInfoList,
   redirectToMePageIfNotAuthenticated,
-  updateGeneralInfo,
 } from "@/utils/api";
 import { onBeforeMount, ref } from "vue";
 import { add } from "ionicons/icons";

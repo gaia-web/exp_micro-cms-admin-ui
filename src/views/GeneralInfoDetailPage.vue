@@ -77,12 +77,11 @@ import {
   addGeneralInfo,
   deleteGeneralInfo,
   obtainGeneralInfo,
-  obtainGeneralInfoList,
   redirectToMePageIfNotAuthenticated,
   updateGeneralInfo,
 } from "@/utils/api";
-import { onBeforeMount, onMounted, ref } from "vue";
-import { add, save, trash } from "ionicons/icons";
+import { onMounted, ref } from "vue";
+import { save, trash } from "ionicons/icons";
 import { ulid } from "ulid";
 
 const router = useRouter();

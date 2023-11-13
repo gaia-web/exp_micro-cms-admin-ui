@@ -18,6 +18,16 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+} from "@ionic/vue";
+import { useRouter } from "vue-router";
+import ExploreContainer from "@/components/ExploreContainer.vue";
+import { redirectToMePageIfNotAuthenticated } from "@/utils/api";
+
+redirectToMePageIfNotAuthenticated(useRouter().replace);
 </script>

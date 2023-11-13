@@ -26,7 +26,7 @@
         <ion-item
           v-for="itemKey in itemKeys"
           button
-          :href="`/tabs/general/${encodeURIComponent(itemKey)}`"
+          @click="$router.push(`/tabs/general/${encodeURIComponent(itemKey)}`)"
         >
           {{ itemKey }}
         </ion-item>

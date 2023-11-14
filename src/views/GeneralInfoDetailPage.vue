@@ -17,7 +17,8 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header data-note="This is only for iOS." collapse="condense">
+      <!-- This header is only for iOS. -->
+      <ion-header collapse="condense">
         <ion-toolbar>
           <ion-buttons slot="start" :collapse="true">
             <ion-back-button defaultHref="/tabs/general"></ion-back-button>

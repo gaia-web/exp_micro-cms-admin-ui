@@ -11,7 +11,8 @@
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header data-note="This is only for iOS." collapse="condense">
+      <!-- This header is only for iOS. -->
+      <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">General Info</ion-title>
           <ion-buttons slot="end" :collapse="true">

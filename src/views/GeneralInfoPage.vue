@@ -49,15 +49,9 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/vue";
-import { useRouter } from "vue-router";
-import {
-  obtainGeneralInfoList,
-  redirectToMePageIfNotAuthenticated,
-} from "@/utils/api";
+import { obtainGeneralInfoList } from "@/utils/api";
 import { onBeforeMount, ref } from "vue";
 import { add } from "ionicons/icons";
-
-redirectToMePageIfNotAuthenticated(useRouter().replace);
 
 const itemKeys = ref<string[]>();
 

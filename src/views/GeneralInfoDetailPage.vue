@@ -79,33 +79,33 @@ import {
   addGeneralInfo,
   deleteGeneralInfo,
   obtainGeneralInfo,
-  redirectToMePageIfNotAuthenticated,
   updateGeneralInfo,
 } from "@/utils/api";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { save, trash } from "ionicons/icons";
 import { ulid } from "ulid";
+import { RouteNames, getRoutePathByName } from "@/utils/routes";
 
 const router = useRouter();
-
-redirectToMePageIfNotAuthenticated(router.replace);
 
 const id = useRoute().params["id"] as string;
 const key = ref(id === "$" ? ulid() : id);
 const value = ref();
+
+const goBackToParentPage = () => {
+  router.replace(
+    getRoutePathByName(router, RouteNames.GENERAL_INFO_PAGE) ?? ""
+  );
+};
 
 const refreshValue = async () => {
   if (id === "$") return;
   try {
     value.value = await obtainGeneralInfo(key.value);
   } catch (e) {
-    router.replace("/tabs/general");
+    goBackToParentPage();
   }
 };
-
-onMounted(async () => {
-  await refreshValue();
-});
 
 const updateHandler = async () => {
   const alert = await alertController.create({
@@ -123,7 +123,7 @@ const updateHandler = async () => {
           id === "$"
             ? await addGeneralInfo(key.value, value.value)
             : await updateGeneralInfo(key.value, value.value);
-          router.replace("/tabs/general");
+          goBackToParentPage();
         },
       },
     ],
@@ -145,7 +145,7 @@ const deleteHandler = async () => {
         role: "confirm",
         handler: async () => {
           await deleteGeneralInfo(key.value);
-          router.replace("/tabs/general");
+          goBackToParentPage();
         },
       },
     ],

@@ -25,9 +25,5 @@ import {
   IonTitle,
   IonContent,
 } from "@ionic/vue";
-import { useRouter } from "vue-router";
 import ExploreContainer from "@/components/ExploreContainer.vue";
-import { redirectToMePageIfNotAuthenticated } from "@/utils/api";
-
-redirectToMePageIfNotAuthenticated(useRouter().replace);
 </script>

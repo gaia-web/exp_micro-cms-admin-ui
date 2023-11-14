@@ -17,14 +17,6 @@ export async function checkAuthentication() {
   }
 }
 
-export async function redirectToMePageIfNotAuthenticated(
-  navigate: (to: string) => void
-) {
-  if (!(await checkAuthentication())) {
-    navigate("/tabs/me");
-  }
-}
-
 export async function signIn(passcode: string) {
   await fetch(`${API_ENDPOINT}/auth/sign-in?passcode=${passcode}`, {
     method: "POST",

@@ -4,7 +4,17 @@
       <ion-toolbar>
         <ion-title size="large">General Info</ion-title>
         <ion-buttons slot="end" :collapse="true">
-          <ion-button href="/tabs/general/$" title="Add">
+          <ion-button
+            @click="
+              $router.push(
+                getRoutePathByName(
+                  $router,
+                  RouteNames.GENERAL_INFO_DETAIL_PAGE
+                )?.replace(':id', '$') ?? ''
+              )
+            "
+            title="Add"
+          >
             <ion-icon slot="icon-only" :icon="add"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -16,7 +26,17 @@
         <ion-toolbar>
           <ion-title size="large">General Info</ion-title>
           <ion-buttons slot="end" :collapse="true">
-            <ion-button href="/tabs/general/$" title="Add">
+            <ion-button
+              @click="
+                $router.push(
+                  getRoutePathByName(
+                    $router,
+                    RouteNames.GENERAL_INFO_DETAIL_PAGE
+                  )?.replace(':id', '$') ?? ''
+                )
+              "
+              title="Add"
+            >
               <ion-icon slot="icon-only" :icon="add"></ion-icon>
             </ion-button>
           </ion-buttons>
@@ -27,7 +47,14 @@
         <ion-item
           v-for="itemKey in itemKeys"
           button
-          @click="$router.push(`/tabs/general/${encodeURIComponent(itemKey)}`)"
+          @click="
+            $router.push(
+              getRoutePathByName(
+                $router,
+                RouteNames.GENERAL_INFO_DETAIL_PAGE
+              )?.replace(':id', encodeURIComponent(itemKey)) ?? ''
+            )
+          "
         >
           {{ itemKey }}
         </ion-item>
@@ -50,16 +77,17 @@ import {
   IonContent,
 } from "@ionic/vue";
 import { obtainGeneralInfoList } from "@/utils/api";
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, onBeforeUpdate, onMounted, ref } from "vue";
 import { add } from "ionicons/icons";
+import { RouteNames, getRoutePathByName } from "@/utils/routes";
 
 const itemKeys = ref<string[]>();
+
+onBeforeUpdate(async () => {
+  await refreshList();
+});
 
 const refreshList = async () => {
   itemKeys.value = await obtainGeneralInfoList();
 };
-
-onBeforeMount(async () => {
-  await refreshList();
-});
 </script>

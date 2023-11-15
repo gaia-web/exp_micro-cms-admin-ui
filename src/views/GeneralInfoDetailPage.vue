@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start" :collapse="true">
-          <ion-back-button defaultHref="/tabs/general"></ion-back-button>
+          <ion-back-button defaultHref=".."></ion-back-button>
         </ion-buttons>
         <ion-title size="large">{{ key ?? "General Info" }}</ion-title>
         <ion-buttons slot="end" :collapse="true">
@@ -81,7 +81,7 @@ import {
   obtainGeneralInfo,
   updateGeneralInfo,
 } from "@/utils/api";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { save, trash } from "ionicons/icons";
 import { ulid } from "ulid";
 import { RouteNames, getRoutePathByName } from "@/utils/routes";
@@ -91,6 +91,10 @@ const router = useRouter();
 const id = useRoute().params["id"] as string;
 const key = ref(id === "$" ? ulid() : id);
 const value = ref();
+
+onMounted(async () => {
+  await refreshValue();
+});
 
 const goBackToParentPage = () => {
   router.replace(

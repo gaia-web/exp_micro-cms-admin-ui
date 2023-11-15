@@ -1,11 +1,4 @@
-// TODO this is just for dev
-export let API_ENDPOINT: string | null = sessionStorage.getItem("API_ENDPOINT");
-
-if (!API_ENDPOINT) {
-  API_ENDPOINT =
-    prompt("Enter the API endpoint.", "http://localhost:8000/api") ?? "";
-  sessionStorage.setItem("API_ENDPOINT", API_ENDPOINT);
-}
+export let API_ENDPOINT: string | undefined = import.meta.env.VITE_API_ENDPOINT;
 
 export async function checkAuthentication() {
   try {

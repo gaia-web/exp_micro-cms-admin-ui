@@ -43,6 +43,9 @@
         </ion-toolbar>
       </ion-header>
 
+      <ion-refresher slot="fixed" @ionRefresh="refresherActiveHandler">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <ion-list>
         <ion-item
           v-for="itemKey in itemKeys"
@@ -72,9 +75,12 @@ import {
   IonIcon,
   IonItem,
   IonList,
+  IonRefresher,
+  IonRefresherContent,
   IonToolbar,
   IonTitle,
   IonContent,
+  RefresherEventDetail,
 } from "@ionic/vue";
 import { obtainGeneralInfoList } from "@/utils/api";
 import { onBeforeMount, onBeforeUpdate, onMounted, ref } from "vue";
@@ -89,5 +95,12 @@ onBeforeUpdate(async () => {
 
 const refreshList = async () => {
   itemKeys.value = await obtainGeneralInfoList();
+};
+
+const refresherActiveHandler = async ({
+  detail,
+}: CustomEvent<RefresherEventDetail>) => {
+  await refreshList();
+  detail.complete();
 };
 </script>

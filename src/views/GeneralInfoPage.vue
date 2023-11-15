@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header :translucent="true">
       <ion-toolbar>
         <ion-title size="large">General Info</ion-title>
         <ion-buttons slot="end" :collapse="true">

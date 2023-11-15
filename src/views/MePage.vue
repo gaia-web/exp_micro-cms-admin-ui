@@ -12,7 +12,10 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-card v-if="!authenticated" slot="fixed" class="center">
+      <ion-card v-if="!authenticated" class="center">
+        <ion-card-header>
+          <ion-card-title>Sign In</ion-card-title>
+        </ion-card-header>
         <ion-item>
           <ion-input
             label="Passcode"
@@ -25,10 +28,13 @@
         </ion-item>
         <ion-button expand="block" @click="signInHandler">Sign In</ion-button>
       </ion-card>
-      <div v-else slot="fixed" class="center">
-        <ion-text>You are now signed in.</ion-text>
+      <ion-card v-else class="center">
+        <ion-card-header>
+          <ion-card-title>You are now signed in</ion-card-title>
+          Click below button to sign out.
+        </ion-card-header>
         <ion-button expand="block" @click="signOutHandler">Sign Out</ion-button>
-      </div>
+      </ion-card>
     </ion-content>
   </ion-page>
 </template>
@@ -38,11 +44,12 @@ import { checkAuthentication, signIn, signOut } from "@/utils/api";
 import {
   IonButton,
   IonCard,
+  IonCardHeader,
+  IonCardTitle,
   IonPage,
   IonHeader,
   IonInput,
   IonItem,
-  IonText,
   IonToolbar,
   IonTitle,
   IonContent,
@@ -84,8 +91,13 @@ const signOutHandler = async () => {
 
 <style scoped>
 .center {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+}
+
+ion-card.center {
+  width: 300px;
+  max-width: calc(100% - 20px);
 }
 </style>

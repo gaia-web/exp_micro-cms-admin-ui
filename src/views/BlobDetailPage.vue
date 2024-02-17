@@ -1,0 +1,161 @@
+<template>
+  <ion-page>
+    <ion-header :translucent="true">
+      <ion-toolbar>
+        <ion-buttons slot="start" :collapse="true">
+          <ion-back-button defaultHref=".."></ion-back-button>
+        </ion-buttons>
+        <ion-title size="large">{{ key ?? "Blob" }}</ion-title>
+        <ion-buttons slot="end" :collapse="true">
+          <ion-button @click="saveHandler" title="Save">
+            <ion-icon slot="icon-only" :icon="save"></ion-icon>
+          </ion-button>
+          <ion-button @click="deleteHandler" title="Delete">
+            <ion-icon slot="icon-only" :icon="trash"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content :fullscreen="true">
+      <!-- This header is only for iOS. -->
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-buttons slot="start" :collapse="true">
+            <ion-back-button defaultHref=".."></ion-back-button>
+          </ion-buttons>
+          <ion-title size="large">{{ key ?? "Blob" }}</ion-title>
+          <ion-buttons slot="end" :collapse="true">
+            <ion-button @click="saveHandler" title="Save">
+              <ion-icon slot="icon-only" :icon="save"></ion-icon>
+            </ion-button>
+            <ion-button @click="deleteHandler" title="Delete">
+              <ion-icon slot="icon-only" :icon="trash"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-list>
+        <ion-item>
+          <ion-input
+            label="Key"
+            label-placement="stacked"
+            :disabled="id !== '$'"
+            v-model="key"
+          ></ion-input>
+        </ion-item>
+        <ion-button :href="downloadUrl" target="_blank" download=""
+          >Download</ion-button
+        >
+        <ion-button @click="uploadHandler">Upload</ion-button>
+        <ion-item v-if="file">File Name: {{ file?.name }}</ion-item>
+        <ion-item v-if="file">Size: {{ file?.size }} bytes</ion-item>
+        <ion-item v-if="file">
+          <ion-input
+            label="Content Type"
+            label-placement="stacked"
+            v-model="contentType"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script setup lang="ts">
+import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonPage,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonList,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  alertController,
+} from "@ionic/vue";
+import { useRoute, useRouter } from "vue-router";
+import { createBlob, deleteBlob, getBlobUrl, updateBlob } from "@/utils/api";
+import { Ref, ref } from "vue";
+import { save, trash } from "ionicons/icons";
+import { ulid } from "ulid";
+import { RouteNames, getRoutePathByName } from "@/utils/routes";
+
+const router = useRouter();
+
+const id = useRoute().params["id"] as string;
+const key = ref(id === "$" ? ulid() : id);
+const contentType: Ref<string | undefined> = ref("text/plain");
+const file: Ref<File | undefined> = ref();
+const downloadUrl = ref(getBlobUrl(key.value));
+
+const goBackToParentPage = () => {
+  router.replace(getRoutePathByName(router, RouteNames.BLOB_PAGE) ?? "");
+};
+
+const uploadHandler = async () => {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.multiple = false;
+  input.click();
+  input.addEventListener("input", () => (file.value = input.files?.[0]));
+};
+
+const saveHandler = async () => {
+  const alert = await alertController.create({
+    header: "Saving item",
+    message: `You are saving "${key.value}", are you sure?`,
+    buttons: [
+      {
+        text: "No",
+        role: "cancel",
+      },
+      {
+        text: "Yes",
+        role: "confirm",
+        handler: async () => {
+          id === "$"
+            ? await createBlob(
+                key.value,
+                await file.value?.arrayBuffer(),
+                contentType.value
+              )
+            : await updateBlob(
+                key.value,
+                await file.value?.arrayBuffer(),
+                contentType.value
+              );
+          goBackToParentPage();
+        },
+      },
+    ],
+  });
+  await alert.present();
+};
+
+const deleteHandler = async () => {
+  const alert = await alertController.create({
+    header: "Deleting item",
+    message: `You are deleting "${key.value}", are you sure?`,
+    buttons: [
+      {
+        text: "No",
+        role: "cancel",
+      },
+      {
+        text: "Yes",
+        role: "confirm",
+        handler: async () => {
+          await deleteBlob(key.value);
+          goBackToParentPage();
+        },
+      },
+    ],
+  });
+  await alert.present();
+};
+</script>

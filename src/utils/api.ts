@@ -75,3 +75,46 @@ export async function deleteInfo(key: string) {
     credentials: "include",
   });
 }
+
+export async function getBlobKeys() {
+  return await fetch(`${API_ENDPOINT}/blob`).then((response) =>
+    response.json()
+  );
+}
+
+export function getBlobUrl(key: string) {
+  return `${API_ENDPOINT}/blob/${encodeURIComponent(key)}`;
+}
+
+export async function createBlob(
+  key: string,
+  value: ArrayBuffer | undefined,
+  contentType: string = "application/octet-stream"
+) {
+  return await fetch(`${API_ENDPOINT}/blob/${encodeURIComponent(key)}`, {
+    method: "POST",
+    credentials: "include",
+    body: value,
+    headers: new Headers({ "content-type": contentType }),
+  });
+}
+
+export async function updateBlob(
+  key: string,
+  value: ArrayBuffer | undefined,
+  contentType: string = "application/octet-stream"
+) {
+  return await fetch(`${API_ENDPOINT}/blob/${encodeURIComponent(key)}`, {
+    method: "PUT",
+    credentials: "include",
+    body: value,
+    headers: new Headers({ "content-type": contentType }),
+  });
+}
+
+export async function deleteBlob(key: string) {
+  return await fetch(`${API_ENDPOINT}/blob/${encodeURIComponent(key)}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+}

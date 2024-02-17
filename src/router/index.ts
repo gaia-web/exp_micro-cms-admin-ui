@@ -34,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/BlobPage.vue"),
       },
       {
+        name: RouteNames.BLOB_DETAIL_PAGE,
+        path: "blob/:id",
+        component: () => import("@/views/BlobDetailPage.vue"),
+      },
+      {
         name: RouteNames.ME_PAGE,
         path: "me",
         component: () => import("@/views/MePage.vue"),

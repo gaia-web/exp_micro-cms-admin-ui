@@ -24,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/InfoPage.vue"),
       },
       {
+        name: RouteNames.INFO_DETAIL_PAGE,
+        path: "info/:id",
+        component: () => import("@/views/InfoDetailPage.vue"),
+      },
+      {
         name: RouteNames.BLOB_PAGE,
         path: "blob",
         component: () => import("@/views/BlobPage.vue"),

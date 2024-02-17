@@ -1,0 +1,7 @@
+{
+  "name": "deno-micro-cms-admin-ui",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}

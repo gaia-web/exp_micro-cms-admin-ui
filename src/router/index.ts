@@ -1,39 +1,58 @@
-import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { RouteRecordRaw } from 'vue-router';
-import TabsPage from '../views/TabsPage.vue'
+import { createRouter, createWebHistory } from "@ionic/vue-router";
+import { RouteRecordRaw } from "vue-router";
+import TabsPage from "../views/TabsPage.vue";
+import { RouteNames } from "@/utils/routes";
+import { checkAuthentication } from "@/utils/api";
+import { alertController } from "@ionic/vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    redirect: '/tabs/tab1'
+    path: "/",
+    redirect: "/tabs/tab1",
   },
   {
-    path: '/tabs/',
+    path: "/tabs/",
     component: TabsPage,
     children: [
       {
-        path: '',
-        redirect: '/tabs/tab1'
+        path: "",
+        redirect: "/tabs/tab1",
       },
       {
-        path: 'tab1',
-        component: () => import('@/views/Tab1Page.vue')
+        name: RouteNames.INFO_PAGE,
+        path: "info",
+        component: () => import("@/views/InfoPage.vue"),
       },
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2Page.vue')
+        name: RouteNames.BLOB_PAGE,
+        path: "blob",
+        component: () => import("@/views/BlobPage.vue"),
       },
       {
-        path: 'tab3',
-        component: () => import('@/views/Tab3Page.vue')
-      }
-    ]
-  }
-]
+        name: RouteNames.ME_PAGE,
+        path: "me",
+        component: () => import("@/views/MePage.vue"),
+      },
+    ],
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+router.beforeResolve(async (to) => {
+  if (to.name === RouteNames.ME_PAGE) return;
+  if (!(await checkAuthentication())) {
+    const alert = await alertController.create({
+      header: "Not authenticated.",
+      message: "Sign in to continue.",
+      buttons: ["Ok"],
+    });
+    await alert.present();
+    return { name: RouteNames.ME_PAGE };
+  }
+});
+
+export default router;

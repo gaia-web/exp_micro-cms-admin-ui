@@ -8,15 +8,11 @@ import { alertController } from "@ionic/vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/tabs/tab1",
-  },
-  {
-    path: "/tabs/",
     component: TabsPage,
     children: [
       {
         path: "",
-        redirect: "/tabs/tab1",
+        redirect: "me",
       },
       {
         name: RouteNames.INFO_PAGE,
